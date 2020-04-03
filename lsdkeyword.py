@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import copy
 
 class Keyword(object):
     def __init__(self, write_file_name):
@@ -12,52 +13,76 @@ class Keyword(object):
     ########################################################
 
     def node(self, nodes, tc=0, rc=0):
+        if nodes.__class__ == {}.__class__:
+            nodes_iter=iter(nodes.values())
+        elif nodes.__class__ == [].__class__:
+            nodes_iter=nodes
         line_block = ['*Node\n']
         line_block.append(
             '$#               nid                   x                   y                   z                  tc                  rc\n')
-        for node in iter(nodes.values()):
+        for node in nodes_iter:
             line_block.append(self.format_key_line([node.id_, *list(node.coord), tc, rc]))
         self.submit_block(line_block)
 
     def element_shell(self, elements):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_SHELL\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
-        for elem in elements.values():
+        for elem in elements_iter:
             line_block.append(self.format_key_line([elem.id_, elem.parent, *elem.node_ids]))
         self.submit_block(line_block)
 
     def element_solid(self, elements):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_SOLID\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
-        for elem in elements.values():
+        for elem in elements_iter:
             line_block.append(self.format_key_line([elem.id_, elem.parent, *elem.node_ids]))
         self.submit_block(line_block)
 
     def element_shell_offset(self, elements, offset):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_SHELL_OFFSET\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
-        for elem in elements.values():
+        for elem in elements_iter:
             line_block.append(self.format_key_line([elem.id_, elem.parent, *elem.node_ids]))
             line_block.append(self.format_key_line([offset]))
         self.submit_block(line_block)
 
     def element_beam_orientation(self, elements):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_BEAM_ORIENTATION\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
-        for elem in elements.values():
+        for elem in elements_iter:
             line_block.append(self.format_key_line([elem.id_, elem.parent, *elem.node_ids]))
             line_block.append(self.format_key_line([*list(elem.orientation)]))
         self.submit_block(line_block)
 
     def element_beam_thickness_orientation(self, elements):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_BEAM_THICKNESS_ORIENTATION\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
-        for elem in elements.values():
+        for elem in elements_iter:
             ts1 = np.sqrt(elem.csa * 4 / np.pi)
             tt1 = 0
             line_block.append(self.format_key_line([elem.id_, elem.parent, *elem.node_ids]))
@@ -66,11 +91,15 @@ class Keyword(object):
         self.submit_block(line_block)
 
     def element_beam_section07_orientation(self, elements):
+        if elements.__class__ == {}.__class__:
+            elements_iter = iter(elements.values())
+        elif elements.__class__ == [].__class__:
+            elements_iter = elements
         line_block = ['*ELEMENT_BEAM_SECTION_ORIENTATION\n']
         line_block.append(
             '$#               nid                 pid                  n1                  n2                  n3                  n4                  n5                  n6\n')
         stype = 'SECTION_07'
-        for elem in elements.values():
+        for elem in elements_iter:
             D1 = np.sqrt(elem.csa * 4 / np.sqrt(3))
             D2 = D1 / 100
             D3 = D1 * np.sqrt(3) / 2
@@ -154,6 +183,7 @@ class Keyword(object):
         line_block.append(self.format_key_line([nsid, 0.0, 0.0, 0.0, 0.0, 'MECH']))
         line_block.append(
             '$#              nid1                nid2                nid3                nid4                nid5                nid6                nid7                nid8\n')
+        node_list=copy.copy(node_list)
         k, m = divmod(len(node_list), 8)
         if m != 0:
             node_list.extend([0] * (8 - m))
@@ -162,19 +192,20 @@ class Keyword(object):
             line_block.append(self.format_key_line(node_list[8 * i:8 * (i + 1)]))
         self.submit_block(line_block)
 
-    def set_segment(self, nsid, nodeList):
+    def set_segment(self, nsid, node_list):
         line_block = ['*SET_SEGMENT\n']
         line_block.append(
             '$#               sid                 da1                 da2                 da3                 da4              solver\n')
         line_block.append(self.format_key_line([nsid, 0.0, 0.0, 0.0, 0.0, 'MECH']))
         line_block.append(
             '$#              nid1                nid2                nid3                nid4                nid5                nid6                nid7                nid8\n')
-        k, m = divmod(len(nodeList), 8)
+        node_list = copy.copy(node_list)
+        k, m = divmod(len(node_list), 8)
         if m != 0:
-            nodeList.extend([0] * (8 - m))
+            node_list.extend([0] * (8 - m))
             k = k + 1
         for i in range(k):
-            line_block.append(self.format_key_line(nodeList[8 * i:8 * (i + 1)]))
+            line_block.append(self.format_key_line(node_list[8 * i:8 * (i + 1)]))
         self.submit_block(line_block)
 
     def set_2D_segment(self, sid, pid_list):
@@ -196,6 +227,7 @@ class Keyword(object):
         line_block.append(self.format_key_line([sid, 0.0, 0.0, 0.0, 0.0, 'MECH']))
         line_block.append(
             '$#              pid1                pid2                pid3                pid4                pid5                pid6                pid7                pid8\n')
+        pid_list=copy.copy(pid_list)
         k, m = divmod(len(pid_list), 8)
         if m != 0:
             pid_list.extend([0] * (8 - m))
@@ -507,6 +539,7 @@ class Keyword(object):
         line_block = ['*DATABASE_HISTORY_NODE\n']
         line_block.append(
             '$#               id1                 id2                 id3                 id4                 id5                 id6                 id7                 id8\n')
+        nids = copy.copy(nids)
         k, m = divmod(len(nids), 8)
         if m != 0:
             nids.extend([0] * (8 - m))
