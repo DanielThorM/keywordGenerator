@@ -155,6 +155,13 @@ class Keyword(object):
                 string_array = string_array + '{:<20s}'.format(item)
         return string_array + '\n'
 
+    def format_comment_line(self, list_of_items):
+        # comma separated, max 8 integers (I8)
+        string_array = '$#'+list_of_items[0].rjust(18, ' ')
+        for item in list_of_items[1:]:
+            string_array = string_array + item.rjust(20, ' ')
+        return string_array + '\n'
+
     def format_key_line_short(self, list_of_items):
         # comma separated, max 8 integers (I8)
         string_array = ''
