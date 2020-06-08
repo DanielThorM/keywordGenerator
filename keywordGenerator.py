@@ -701,13 +701,9 @@ class Keyword(object):
         line_block.append(self.format_key_line([gama0, lcid]))
         self.submit_block(line_block)
 
-    def mat57(self, mid, lcid, ro=3.0E-11, e=20):
-        tc = 1e20
-        hu = 1.0
+    def mat57(self, mid, lcid, ro=3.0E-11, e=20, tc=1e20, hu=1.0, shape=1.0, fail=1.0):
         beta = 0.
         damp = 0.
-        shape = 1.0
-        fail = 1.0
         bvflag = 0.0
         ed = 0.0
         betal = 0.0
@@ -753,32 +749,31 @@ class Keyword(object):
         line_block.append(self.format_key_line([mid, ro, e, pr, lcid, tsc, damp]))
         self.submit_block(line_block)
 
-    def mat83(self, mid, tbid, ro=3.0E-11, e=20, tc=1e20):
+    def mat83(self, mid, tbid, ro=3.0E-11, e=20, hu=0.0, shape=0.0, tc=1e20, tflag=0.0, fail=1.0):
         kcon = 0.0
-        fail = 1.0
         damp = 0.0
         line_block = ['*MAT_FU_CHANG_FOAM_TITLE\n']
         line_block.append('Fu chang foam')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'kcon', 'tc', 'fail', 'damp', 'tbid']))
         line_block.append(self.format_key_line([mid, ro, e, kcon, tc, fail, damp, tbid]))
         line_block.append(self.format_comment_line(['bvflag', 'sflag', 'rflag', 'tflag', 'pvid', 'sraf', 'ref', 'hu']))
-        line_block.append(self.format_key_line([0., 1.0, 0.0, 0.0, 0., 0.0, 0.0, 0.0]))
+        line_block.append(self.format_key_line([0., 1.0, 0.0, tflag, 0., 0.0, 0.0, hu]))
         line_block.append(self.format_comment_line(['d0', 'n0', 'n1', 'n2', 'n3', 'c0', 'c1', 'c2']))
         line_block.append(self.format_key_line([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
         line_block.append(self.format_comment_line(['c3', 'c4', 'c5', 'aij', 'sij', 'minr', 'maxr', 'shape']))
-        line_block.append(self.format_key_line([0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0]))
+        line_block.append(self.format_key_line([0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, shape]))
         line_block.append(self.format_comment_line(['expon', 'riuld']))
         line_block.append(self.format_key_line([1.0, 0.0]))
         self.submit_block(line_block)
 
-    def mat154(self, mid, ro=3.0E-11, e=20, pr=0.2, alpha=0, gamma=0, epsd=0, alpha2=0, beta=0, sigp=0, derfi=0,
-               cfail=0):
+    def mat154(self, mid, ro=3.0E-11, e=20, pr=0.2, alpha=0, gamma=0, eps_d=0, alpha_2=0, beta=0, sig_p=0, derfi=0,
+               cfail=0, pfail=0.0, num=5):
         line_block = ['*MAT_DESHPANDE_FLECK_FOAM_TITLE\n']
         line_block.append('Deshpande Fleck foam')
         line_block.append(self.format_comment_line([' mid', 'ro', 'e', 'pr', 'alpha', 'gamma']))
         line_block.append(self.format_key_line([mid, ro, e, pr, alpha, gamma]))
-        line_block.append(self.format_comment_line(['epsd', 'alpha2', 'beta', 'sigp', 'derfi', 'cfail']))
-        line_block.append(self.format_key_line([epsd, alpha2, beta, sigp, derfi, cfail]))
+        line_block.append(self.format_comment_line(['epsd', 'alpha2', 'beta', 'sigp', 'derfi', 'cfail', 'pfail', 'num']))
+        line_block.append(self.format_key_line([eps_d, alpha_2, beta, sig_p, derfi, cfail, pfail, num]))
         self.submit_block(line_block)
 
     def mat_null(self, mid, e=1500, ro=9.4600E-10):
