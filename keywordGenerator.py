@@ -533,7 +533,7 @@ class Keyword(object):
         adpopt = 0
         tmid = 0
         line_block = ['*PART\n']
-        line_block.append('Auto from elem')
+        line_block.append('Auto from elem\n')
         line_block.append(self.format_comment_line(['pid', 'secid', 'mid', 'eosid', 'hgid', 'grav', 'adpopt', 'tmid']))
         line_block.append(self.format_key_line([pid, secid, mid, eosid, hgid, gray, adpopt, tmid]))
         self.submit_block(line_block)
@@ -544,7 +544,7 @@ class Keyword(object):
         adpopt = 0
         tmid = 0
         line_block = ['*PART_CONTACT\n']
-        line_block.append('Contact')
+        line_block.append('Contact\n')
         line_block.append(self.format_comment_line(['pid', 'secid', 'mid', 'eosid', 'hgid', 'grav', 'adpopt', 'tmid']))
         line_block.append(self.format_key_line([pid, secid, mid, eosid, hgid, gray, adpopt, tmid]))
         line_block.append(self.format_comment_line(['fs', 'fd', 'dc', 'vc', 'opt', 'sft', 'ssf', 'CPARM8']))
@@ -603,7 +603,7 @@ class Keyword(object):
                                etan=1., fail=0.0, tdel=0.0, lcss=0, c=0, p=0):
 
         line_block = ['*MAT_PIECEWISE_LINEAR_PLASTICITY_TITLE\n']
-        line_block.append('linear - plasticity')
+        line_block.append('linear - plasticity\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'pr', 'sigy', 'etan', 'fail', 'tdel']))
         line_block.append(self.format_key_line([mid, ro, e, pr, sigy, etan, fail, tdel]))
 
@@ -620,7 +620,7 @@ class Keyword(object):
 
     def mat28(self, mid, ro=9.20000E-10, e=1500.0, pr=0.3, sigy=20., etan=1.):
         line_block = ['*MAT_RESULTANT_PLASTICITY_TITLE\n']
-        line_block.append('linear - plasticity')
+        line_block.append('linear - plasticity\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'pr', 'sigy', 'etan', 'fail', 'tdel']))
         line_block.append(self.format_key_line([mid, ro, e, pr, sigy, etan]))
         self.submit_block(line_block)
@@ -730,7 +730,7 @@ class Keyword(object):
         sw = 1.0
         st = 1.0
         line_block = ['*MAT_SIMPLIFIED_RUBBER/FOAM_WITH_FAILURE_TITLE\n']
-        line_block.append('Rubber')
+        line_block.append('Rubber\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'k', 'mu', 'g', 'sigf']))
         line_block.append(self.format_key_line([mid, ro, k, mu, g, sigf, 0.0, 0.0]))
         line_block.append(self.format_comment_line(['sgl', 'sw', 'st', 'lc/tbid', 'tension', 'rtype', 'avgopt']))
@@ -753,7 +753,7 @@ class Keyword(object):
         kcon = 0.0
         damp = 0.0
         line_block = ['*MAT_FU_CHANG_FOAM_TITLE\n']
-        line_block.append('Fu chang foam')
+        line_block.append('Fu chang foam\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'kcon', 'tc', 'fail', 'damp', 'tbid']))
         line_block.append(self.format_key_line([mid, ro, e, kcon, tc, fail, damp, tbid]))
         line_block.append(self.format_comment_line(['bvflag', 'sflag', 'rflag', 'tflag', 'pvid', 'sraf', 'ref', 'hu']))
@@ -769,7 +769,7 @@ class Keyword(object):
     def mat154(self, mid, ro=3.0E-11, e=20, pr=0.2, alpha=0, gamma=0, eps_d=0, alpha_2=0, beta=0, sig_p=0, derfi=0,
                cfail=0, pfail=0.0, num=5):
         line_block = ['*MAT_DESHPANDE_FLECK_FOAM_TITLE\n']
-        line_block.append('Deshpande Fleck foam')
+        line_block.append('Deshpande Fleck foam\n')
         line_block.append(self.format_comment_line([' mid', 'ro', 'e', 'pr', 'alpha', 'gamma']))
         line_block.append(self.format_key_line([mid, ro, e, pr, alpha, gamma]))
         line_block.append(self.format_comment_line(['epsd', 'alpha2', 'beta', 'sigp', 'derfi', 'cfail', 'pfail', 'num']))
@@ -783,14 +783,14 @@ class Keyword(object):
         cerod = 0.0
         pr = 0.0
         line_block = ['*MAT_NULL_TITLE\n']
-        line_block.append('Outer face material')
+        line_block.append('Outer face material\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'pc', 'mu', 'terod', 'cerod', 'ym', 'pr']))
         line_block.append(self.format_key_line([mid, ro, pc, mu, terod, cerod, e, pr]))
         self.submit_block(line_block)
 
     def mat_elastic(self, mid, e=1500, ro=9.4600E-10, pr=0.3):
         line_block = ['*MAT_ELASTIC_TITLE\n']
-        line_block.append('Ref element material')
+        line_block.append('Ref element material\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'pr']))
         line_block.append(self.format_key_line([mid, ro, e, pr]))
         self.submit_block(line_block)
@@ -798,7 +798,7 @@ class Keyword(object):
     def mat_rigid(self, mid, ro=9.4600E-10, e=1500):
         pr = 0.3
         line_block = ['*MAT_RIGID_TITLE\n']
-        line_block.append('Outer face material')
+        line_block.append('Outer face material\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'E', 'pr']))
         line_block.append(self.format_key_line([mid, ro, e, pr, 0, 0, 0]))
         line_block.append(self.format_comment_line(['cmo', 'con1', 'con2']))
@@ -814,7 +814,7 @@ class Keyword(object):
         '''n1: origo, n2: x-axis, n3 : in xy plane'''
         dir = 'X'
         line_block = ['*DEFINE_COORDINATE_NODES_TITLE\n']
-        line_block.append('Local Coord')
+        line_block.append('Local Coord\n')
         line_block.append(self.format_comment_line(['cid', 'n1', 'n2', 'n3', 'flag', 'dir']))
         line_block.append(self.format_key_line([cid, nodes[0], nodes[1], nodes[2], flag, dir]))
         self.submit_block(line_block)
