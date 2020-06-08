@@ -137,10 +137,10 @@ class Keyword(object):
     ########################################################
     def comment_block(self, commentStr, insertInd=False):
         line_block = ['$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n']
-        line_block.append('$')
+        line_block.append('$\n')
         line_block.append('$$$$    {}\n'.format(commentStr))
-        line_block.append('$')
-        line_block.append('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        line_block.append('$\n')
+        line_block.append('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n')
         self.lines.append(line_block)
 
     def format_key_line(self, list_of_items):
