@@ -505,10 +505,16 @@ class Keyword(object):
         line_block.append(self.format_key_line([dt, binary, lcur, ioopt]))
         self.submit_block(line_block)
 
-    def database_hist_node_set(self, nsid):
+    def database_hist_node_set(self, nsids):
         line_block = ['*DATABASE_HISTORY_NODE_SET\n']
         line_block.append(self.format_comment_line(['id1', 'id2', 'id3', 'id4', 'id5', 'id6', 'id7', 'id8']))
-        line_block.append(self.format_key_line(nsid))
+        nsids=copy.copy(nsids)
+        k, m = divmod(len(nsids), 8)
+        if m != 0:
+            nsids.extend([0] * (8 - m))
+            k = k + 1
+        for i in range(k):
+            line_block.append(self.format_key_line(nsids[8 * i:8 * (i + 1)]))
         self.submit_block(line_block)
 
     def database_hist_node(self, nids):
