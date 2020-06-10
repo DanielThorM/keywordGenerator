@@ -755,8 +755,7 @@ class Keyword(object):
         line_block.append(self.format_key_line([mid, ro, e, pr, lcid, tsc, damp]))
         self.submit_block(line_block)
 
-    def mat83(self, mid, tbid, ro=3.0E-11, e=20, hu=0.0, shape=0.0, tc=1e20, tflag=0.0, fail=1.0):
-        kcon = 0.0
+    def mat83(self, mid, tbid, ro=3.0E-11, e=20, kcon=20, hu=0.0, shape=0.0, tc=1e20, tflag=0.0, fail=1.0):
         damp = 0.0
         line_block = ['*MAT_FU_CHANG_FOAM_TITLE\n']
         line_block.append('Fu chang foam\n')
