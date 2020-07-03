@@ -605,7 +605,7 @@ class Keyword(object):
     ###########################################
     # Material
     ################################################
-    def mat24(self, mid, ro=9.20000E-10, e=1500.0, pr=0.3, sigy=20.,
+    def mat24(self, mid, ro=9.10000E-10, e=1500.0, pr=0.3, sigy=20.,
                                etan=1., fail=0.0, tdel=0.0, lcss=0, c=0, p=0):
 
         line_block = ['*MAT_PIECEWISE_LINEAR_PLASTICITY_TITLE\n']
@@ -624,14 +624,14 @@ class Keyword(object):
 
         self.submit_block(line_block)
 
-    def mat28(self, mid, ro=9.20000E-10, e=1500.0, pr=0.3, sigy=20., etan=1.):
+    def mat28(self, mid, ro=9.10000E-10, e=1500.0, pr=0.3, sigy=20., etan=1.):
         line_block = ['*MAT_RESULTANT_PLASTICITY_TITLE\n']
         line_block.append('linear - plasticity\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'pr', 'sigy', 'etan', 'fail', 'tdel']))
         line_block.append(self.format_key_line([mid, ro, e, pr, sigy, etan]))
         self.submit_block(line_block)
 
-    def mat24_rate(self, mid, ro=9.20000E-10, e=1500.0, pr=0.3, sigy=20.,
+    def mat24_rate(self, mid, ro=9.10000E-10, e=1500.0, pr=0.3, sigy=20.,
                         etan=1., fail=0.0, tdel=0.0, str_mod=[0.075, 0.2, 1e-3, 3e1], plot_curve=False, soften=False):
         tbid = 2000
         sigma_y = sigy / (1 + str_mod[0] * np.log10(str_mod[2]))
@@ -723,7 +723,7 @@ class Keyword(object):
         line_block.append(self.format_key_line([shape, fail, bvflag, ed, betal, kcon, ref]))
         self.submit_block(line_block)
 
-    def mat181(self, mid, lcid, youngs=1500, ro=9.2E-10):
+    def mat181(self, mid, lcid, youngs=1500, ro=9.1E-10):
         pr = 0.3
         k = youngs / (3 * (1 - 2 * pr))
         mu = 0.00
@@ -781,7 +781,7 @@ class Keyword(object):
         line_block.append(self.format_key_line([eps_d, alpha_2, beta, sig_p, derfi, cfail, pfail, num]))
         self.submit_block(line_block)
 
-    def mat_null(self, mid, e=1500, ro=9.4600E-10):
+    def mat_null(self, mid, e=1500, ro=9.100E-10):
         pc = 0.0
         mu = 0.0
         terod = 0.0
@@ -793,14 +793,14 @@ class Keyword(object):
         line_block.append(self.format_key_line([mid, ro, pc, mu, terod, cerod, e, pr]))
         self.submit_block(line_block)
 
-    def mat_elastic(self, mid, e=1500, ro=9.4600E-10, pr=0.3):
+    def mat_elastic(self, mid, e=1500, ro=9.100E-10, pr=0.3):
         line_block = ['*MAT_ELASTIC_TITLE\n']
         line_block.append('Ref element material\n')
         line_block.append(self.format_comment_line(['mid', 'ro', 'e', 'pr']))
         line_block.append(self.format_key_line([mid, ro, e, pr]))
         self.submit_block(line_block)
 
-    def mat_rigid(self, mid, ro=9.4600E-10, e=1500):
+    def mat_rigid(self, mid, ro=9.100E-10, e=1500):
         pr = 0.3
         line_block = ['*MAT_RIGID_TITLE\n']
         line_block.append('Outer face material\n')
